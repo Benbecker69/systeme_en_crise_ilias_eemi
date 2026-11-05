@@ -1,0 +1,291 @@
+Null display is "(NULL)".
+=== A00 Volume
+ lignes | id_min | id_max 
+--------+--------+--------
+    271 |      1 |    271
+(1 row)
+
+=== A01 No constraint at all (no PK, FK, UNIQUE, CHECK)
+ nb_contraintes 
+----------------
+              0
+(1 row)
+
+=== A02 Every business column is nullable TEXT
+ data_type | is_nullable | nb_colonnes |                                                                                                   colonnes                                                                                                   
+-----------+-------------+-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ integer   | NO          |           1 | id
+ text      | YES         |          15 | client_nom, client_email, client_tel, client_adresse, contrat_ref, contrat_sla, technicien, technicien_tel, equipement, equipement_serie, pieces_utilisees, date_ouverture, date_cloture, statut, cout_total
+(2 rows)
+
+=== A03 Duplicate id and empty row accepted (rolled back)
+BEGIN
+INSERT 0 1
+INSERT 0 1
+ lignes_avec_id_1 | lignes_vides 
+------------------+--------------
+                2 |            2
+(1 row)
+
+ROLLBACK
+=== A04 Opening dates: three formats in one column
+   format   | nb  
+------------+-----
+ DD-MM-YY   | 126
+ DD/MM/YYYY | 117
+ YYYY-MM-DD |  28
+(3 rows)
+
+=== A05 Closing dates: three formats + three ways to say "no date"
+   format    | nb 
+-------------+----
+ DD/MM/YYYY  | 87
+ DD-MM-YY    | 85
+ NULL        | 29
+ 'N/A'       | 28
+ chaine vide | 22
+ YYYY-MM-DD  | 20
+(6 rows)
+
+=== A06 Text dates sort wrongly: first 6 rows of ORDER BY date_ouverture, with the real date
+ valeur_texte | date_reelle 
+--------------+-------------
+ 01-03-25     | 2025-03-01
+ 01-04-25     | 2025-04-01
+ 01-05-25     | 2025-05-01
+ 01/03/2025   | 2025-03-01
+ 01/04/2026   | 2026-04-01
+ 01/05/2026   | 2026-05-01
+(6 rows)
+
+=== A07 Costs stored as text with 4 spellings of the currency
+  motif  | nb 
+---------+----
+ N.N€    | 73
+ N.N     | 72
+ N,N €   | 64
+ N,N EUR | 62
+(4 rows)
+
+=== A08 Text max() of the costs is not the real maximum
+ max_texte | max_reel 
+-----------+----------
+ 980.45€   |  2074.68
+(1 row)
+
+=== A09 Status: 10 spellings for 3 business states
+ statut_brut | nb 
+-------------+----
+ «Clos»      | 49
+ «clos»      | 49
+ «CLOTURE»   | 54
+ «Clôturé»   | 46
+ «en cours»  | 12
+ «En Cours»  | 15
+ «EN COURS » | 17
+ «nouveau»   |  6
+ «ouvert»    | 11
+ «Ouvert»    | 12
+(10 rows)
+
+=== A10 SLA: 12 spellings for 4 values
+ contrat_sla | nb 
+-------------+----
+ 24          | 11
+ 24 heures   |  7
+ 24h         | 12
+ 4           | 22
+ 4 heures    | 34
+ 48          | 18
+ 48 heures   |  8
+ 48h         | 18
+ 4h          | 33
+ 8           | 35
+ 8 heures    | 30
+ 8h          | 43
+(12 rows)
+
+=== A11 Same client written up to 6 different ways (same phone)
+ client_tel | nb_variantes |                                                              variantes                                                               
+------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------
+ 0484067373 |            6 | « Supermarché Fresh» «SUPERMARCHÉ FRESH» «Supermarche Fresh» «Supermarché Fresh » «Supermarché Fresh» «supermarché fresh»
+ 0490433061 |            6 | « Transports Berthet» «SARL Transports Berthet» «TRANSPORTS BERTHET» «Transports Berthet » «Transports Berthet» «transports berthet»
+ 0433560790 |            5 | «FROMAGERIE PERRET» «Fromagerie  Perret» «Fromagerie Perret » «Fromagerie Perret» «fromagerie perret»
+ 0416394078 |            4 | « Brasserie du Pont» «Brasserie du Pont» «SARL Brasserie du Pont» «brasserie du pont»
+ 0427906126 |            4 | « Laverie Express» «Laverie Express » «Laverie Express» «laverie express»
+ 0435127407 |            4 | «GARAGE DELORME» «Garage Delorme » «Garage Delorme» «SARL Garage Delorme»
+ 0439380857 |            4 | « École Montessori Lyon» «Ecole Montessori Lyon» «ÉCOLE MONTESSORI LYON» «École Montessori Lyon»
+ 0443424027 |            4 | «Atelier  Girard» «Atelier Girard » «Atelier Girard» «atelier girard»
+ 0448764634 |            4 | «Gymnase  Municipal» «Gymnase Municipal » «Gymnase Municipal» «SARL Gymnase Municipal»
+ 0463563890 |            4 | «Lycee Saint-Joseph» «Lycée Saint-Joseph » «Lycée Saint-Joseph» «lycée saint-joseph»
+ 0469838754 |            4 | «Clinique  du  Parc» «Clinique du Parc» «SARL Clinique du Parc» «clinique du parc»
+ 0476821771 |            4 | « Mairie de Vaulx» «MAIRIE DE VAULX» «Mairie de Vaulx» «SARL Mairie de Vaulx»
+ 0480384671 |            4 | « Pharmacie Central» «Pharmacie  Central» «Pharmacie Central» «SARL Pharmacie Central»
+ 0490154243 |            4 | «Imprimerie  Rhône» «Imprimerie Rhône » «Imprimerie Rhône» «imprimerie rhône»
+ 0402659816 |            3 | « Boulangerie Martin» «BOULANGERIE MARTIN» «Boulangerie Martin»
+ 0422121532 |            3 | «HÔTEL DES ALPES» «Hôtel des Alpes» «hôtel des alpes»
+ 0440951385 |            3 | «Résidence  Les  Tilleuls» «Résidence Les Tilleuls » «Résidence Les Tilleuls»
+ 0443326860 |            3 | « Domaine des Vignes» «Domaine des Vignes» «SARL Domaine des Vignes»
+ 0405746020 |            2 | «Centre Équestre Bellevue» «SARL Centre Équestre Bellevue»
+ 0437085007 |            2 | «CABINET DUBOIS» «Cabinet Dubois»
+(20 rows)
+
+=== A12 Distinct raw names vs real clients
+ noms_bruts_distincts | clients_reels 
+----------------------+---------------
+                   78 |            21
+(1 row)
+
+=== A13 E-mails: missing or upper-cased
+ email_absent | email_majuscules | emails_bruts_distincts | emails_reels 
+--------------+------------------+------------------------+--------------
+            8 |               76 |                     41 |           21
+(1 row)
+
+=== A14 Natural keys are 1:1 (0 = no conflict): basis of deduplication
+           correspondance           | conflits 
+------------------------------------+----------
+ telephone -> contrat               |        0
+ contrat -> telephone               |        0
+ telephone -> email (minuscules)    |        0
+ telephone -> adresse               |        0
+ contrat -> SLA (valeur numerique)  |        0
+ numero de serie -> type            |        0
+ numero de serie -> client          |        0
+ technicien -> telephone            |        0
+ telephone technicien -> technicien |        0
+(9 rows)
+
+=== A15 Real entity counts hidden in the flat table
+ clients | techniciens | equipements | types_equipement 
+---------+-------------+-------------+------------------
+      21 |           8 |          40 |                7
+(1 row)
+
+=== A16 Redundancy: client data copied on every row (update anomaly)
+ client_tel | copies_des_coordonnees 
+------------+------------------------
+ 0416394078 |                     26
+ 0484067373 |                     24
+ 0439380857 |                     20
+ 0433560790 |                     19
+ 0490433061 |                     18
+(5 rows)
+
+=== A17 Parts: several values in one field (1NF violation) + 3 ways to say "none"
+   contenu   | nb 
+-------------+----
+ 'aucune'    | 34
+ 1 piece(s)  | 58
+ 2 piece(s)  | 53
+ 3 piece(s)  | 66
+ NULL        | 31
+ chaine vide | 29
+(6 rows)
+
+=== A18 Parts: lines hidden in the text field, catalogue size, prices
+ lignes_de_pieces | references_distinctes | lignes_mal_formees | references_en_double_dans_une_intervention 
+------------------+-----------------------+--------------------+--------------------------------------------
+              362 |                    15 |                  0 |                                          0
+(1 row)
+
+=== A19 Incoherent rows (dates parsed on the fly)
+ id  |  statut   | ouverture  |  cloture   |           anomalie            
+-----+-----------+------------+------------+-------------------------------
+  45 | «clos»    | 2025-10-09 | 2025-10-07 | cloture avant ouverture
+ 134 | «Clos»    | 2025-04-02 | 2025-03-31 | cloture avant ouverture
+ 192 | «clos»    | 2026-06-17 | 2026-06-16 | cloture avant ouverture
+ 235 | «CLOTURE» | 2025-11-09 | 2025-11-08 | cloture avant ouverture
+   3 | «CLOTURE» | 2025-09-27 | «»         | cloturee sans date de cloture
+  51 | «CLOTURE» | 2025-10-19 | «N/A»      | cloturee sans date de cloture
+ 102 | «CLOTURE» | 2026-08-14 | «NULL»     | cloturee sans date de cloture
+ 135 | «CLOTURE» | 2025-09-25 | «N/A»      | cloturee sans date de cloture
+ 150 | «Clos»    | 2025-06-24 | «»         | cloturee sans date de cloture
+ 174 | «Clos»    | 2026-01-04 | «»         | cloturee sans date de cloture
+(10 rows)
+
+=== A20 Coherence checks that come back clean (they were verified, not assumed)
+ non_cloturee_avec_date | ouverture_illisible | ouverture_dans_le_futur | cout_nul_ou_negatif 
+------------------------+---------------------+-------------------------+---------------------
+                      0 |                   0 |                       0 |                   0
+(1 row)
+
+=== P01 No index on the table
+ nb_index 
+----------
+        0
+(1 row)
+
+=== P02 Filtering a technician by month: full scan + parsing every row
+                                                                                                                                                                                                                                                                                                                 QUERY PLAN                                                                                                                                                                                                                                                                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on interventions_legacy (actual rows=1 loops=1)
+   Filter: ((technicien = 'Durand Karim'::text) AND (CASE WHEN (date_ouverture ~ '^\d{4}-\d{2}-\d{2}$'::text) THEN to_date(date_ouverture, 'YYYY-MM-DD'::text) WHEN (date_ouverture ~ '^\d{2}/\d{2}/\d{4}$'::text) THEN to_date(date_ouverture, 'DD/MM/YYYY'::text) ELSE to_date(date_ouverture, 'DD-MM-YY'::text) END >= '2025-10-01'::date) AND (CASE WHEN (date_ouverture ~ '^\d{4}-\d{2}-\d{2}$'::text) THEN to_date(date_ouverture, 'YYYY-MM-DD'::text) WHEN (date_ouverture ~ '^\d{2}/\d{2}/\d{4}$'::text) THEN to_date(date_ouverture, 'DD/MM/YYYY'::text) ELSE to_date(date_ouverture, 'DD-MM-YY'::text) END <= '2025-10-31'::date))
+   Rows Removed by Filter: 270
+(3 rows)
+
+=== P03 Finding a part needs a non-indexable LIKE on free text
+                           QUERY PLAN                            
+-----------------------------------------------------------------
+ Aggregate (actual rows=1 loops=1)
+   ->  Seq Scan on interventions_legacy (actual rows=33 loops=1)
+         Filter: (pieces_utilisees ~~ '%REF-005%'::text)
+         Rows Removed by Filter: 238
+(4 rows)
+
+=== P04 Searching a client by name misses rows as soon as one spelling differs
+ trouvees_par_nom_exact | interventions_reelles 
+------------------------+-----------------------
+                     10 |                    18
+(1 row)
+
+=== E01 Changing one contract SLA means rewriting every row of that client
+ contrat_ref | lignes_a_modifier |  valeurs_actuelles   
+-------------+-------------------+----------------------
+ CTR-8520    |                26 | 4 | 4 heures | 4h
+ CTR-6617    |                24 | 8 | 8 heures | 8h
+ CTR-5784    |                20 | 8 | 8 heures | 8h
+ CTR-6428    |                19 | 4 | 4 heures | 4h
+ CTR-4320    |                18 | 48 | 48 heures | 48h
+(5 rows)
+
+=== E02 One technician per row, one contract per client: no room for more
+   column_name    
+------------------
+ contrat_ref
+ contrat_sla
+ technicien
+ technicien_tel
+ pieces_utilisees
+ cout_total
+(6 rows)
+
+=== S01 Personal data stored next to operational data in one table
+  column_name   |              nature              
+----------------+----------------------------------
+ client_email   | donnee personnelle / commerciale
+ client_tel     | donnee personnelle / commerciale
+ client_adresse | donnee personnelle / commerciale
+ contrat_ref    | donnee personnelle / commerciale
+ technicien     | donnee personnelle / commerciale
+ technicien_tel | donnee personnelle / commerciale
+(6 rows)
+
+=== S02 Only the superuser owns and reaches the table: no role model
+      table_name      | proprietaire | proprietaire_superuser | rls_active |                 acl                 
+----------------------+--------------+------------------------+------------+-------------------------------------
+ interventions_legacy | postgres     | t                      | f          | (droits par defaut du proprietaire)
+(1 row)
+
+=== S03 Technician access would expose every client (no row or column split possible)
+ clients_visibles_par_un_technicien 
+------------------------------------
+                                 21
+(1 row)
+
+=== S04 No traceability: no audit column, no history
+ colonnes_de_tracabilite 
+-------------------------
+                       0
+(1 row)
+
