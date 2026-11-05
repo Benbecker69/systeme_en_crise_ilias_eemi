@@ -33,6 +33,12 @@ Comptes de démonstration (mots de passe dans `.env`) :
 
 Les adresses e-mail des techniciens sont reportées dans `technicien.email` : c'est ce lien qui permet de filtrer leurs interventions.
 
+## Captures
+
+| Technicien : fiche d'intervention | Manager : anomalies à vérifier | Manager : tableau de bord |
+|---|---|---|
+| ![Technicien](captures/1-technicien-fiche-intervention.jpg) | ![Anomalies](captures/2-manager-anomalies.jpg) | ![Tableau de bord](captures/3-manager-tableau-de-bord.jpg) |
+
 ## Interface technicien
 - Ne voit **que ses interventions** (filtre `technicien_id.email = $CURRENT_USER.email`). La vue par défaut est triée par date, et un signet « Mes interventions à traiter » regroupe celles qui ne sont pas clôturées.
 - Voit le client (nom, adresse, téléphone), l'équipement, les pièces et l'historique de chaque intervention.
@@ -86,6 +92,8 @@ Les adresses e-mail des techniciens sont reportées dans `technicien.email` : c'
   - La règle reste appliquée. `verify.py` vérifie que le statut n'a pas changé, et que le message exact remonte côté admin.
   - Pour compenser, la note du champ Statut rappelle les transitions autorisées.
 - **Métadonnées des relations.** Celles des relations « un vers plusieurs » sont écrites par [`directus/relations.sql`](../directus/relations.sql), parce que l'API Directus voudrait recréer nos clés étrangères. Seule la table interne de Directus est modifiée.
+- **Relations pour les non-admins.** Directus ne montre une relation à un non-admin que s'il peut lire **ses deux côtés**. Le technicien a donc accès en lecture aux champs inverses (`equipement.interventions`, `client.equipements`), qui ne renvoient que des lignes déjà autorisées par son filtre.
+- **Filtres GraphQL.** Le tableau de bord passe par GraphQL, qui exige la forme imbriquée sur une relation : `statut_code: {code: {_neq: "cloturee"}}`.
 - **Tables système.** Celles de Directus (`directus_*`) sont dans le schéma `public`. Elles appartiennent à `directus_app` et n'ont aucun lien avec les tables métier.
 
 ## Fichiers

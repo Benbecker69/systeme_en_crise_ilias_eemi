@@ -50,3 +50,13 @@ Pour exécuter un fichier SQL du projet dans le conteneur :
 | Audit (défauts, requêtes, résultats) | [audit/audit.md](audit/audit.md) |
 | Migration rejouable | [sql/migration.sql](sql/migration.sql) |
 | Schéma | [docs/schema.md](docs/schema.md) |
+| Application no-code (choix, droits, logique côté base, captures) | [docs/application.md](docs/application.md) |
+
+## Application
+
+```powershell
+./scripts/setup-app.ps1        # construit l'application Directus (rejouable)
+python directus/verify.py      # contrôle la séparation des droits
+```
+
+http://localhost:8055 : comptes de démonstration dans [docs/application.md](docs/application.md), mots de passe dans `.env`.
