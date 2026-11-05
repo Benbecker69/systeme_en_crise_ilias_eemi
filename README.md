@@ -35,3 +35,18 @@ Pour exécuter un fichier SQL du projet dans le conteneur :
 ```
 
 `scripts/reset.ps1` supprime les conteneurs **et les volumes** : toutes les données sont recréées de zéro.
+
+## Migration et tests
+
+```powershell
+./scripts/run-sql.ps1 sql/migration.sql   # rejouable : relancer ne change rien
+./scripts/test.ps1                        # rejoue la migration, compare l'export, puis lance les tests SQL
+```
+
+## Livrables
+
+| Livrable | Emplacement |
+|---|---|
+| Audit (défauts, requêtes, résultats) | [audit/audit.md](audit/audit.md) |
+| Migration rejouable | [sql/migration.sql](sql/migration.sql) |
+| Schéma | [docs/schema.md](docs/schema.md) |

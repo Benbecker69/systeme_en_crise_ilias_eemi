@@ -1,0 +1,92 @@
+erDiagram
+    client ||--o{ contrat : "signe"
+    client ||--o{ equipement : "possede"
+    type_equipement ||--o{ equipement : "classe"
+    equipement ||--o{ intervention : "concerne"
+    technicien ||--o{ intervention : "realise"
+    statut_intervention ||--o{ intervention : "qualifie"
+    statut_intervention ||--o{ transition_statut : "depart"
+    statut_intervention ||--o{ transition_statut : "arrivee"
+    intervention ||--o{ intervention_piece : "consomme"
+    piece ||--o{ intervention_piece : "utilisee dans"
+    intervention ||--o{ historique_statut : "trace"
+    statut_intervention ||--o{ historique_statut : "avant / apres"
+
+    client {
+        bigint id PK
+        text nom "NOT NULL, normalise"
+        text email UK "minuscules"
+        text telephone UK "NOT NULL, cle de dedoublonnage"
+        text adresse "NOT NULL"
+        text code_postal "CHECK 5 chiffres"
+        text ville "NOT NULL"
+    }
+    contrat {
+        bigint id PK
+        text reference UK
+        bigint client_id FK
+        int sla_heures "CHECK > 0"
+    }
+    technicien {
+        bigint id PK
+        text nom
+        text prenom
+        text telephone UK
+        text email UK "lien compte applicatif"
+    }
+    type_equipement {
+        bigint id PK
+        text libelle UK
+    }
+    equipement {
+        bigint id PK
+        text numero_serie UK
+        bigint type_id FK
+        bigint client_id FK
+    }
+    piece {
+        bigint id PK
+        text reference UK
+    }
+    statut_intervention {
+        text code PK "ouverte, en_cours, cloturee"
+        text libelle
+        smallint ordre UK
+        boolean est_initial
+        boolean est_final
+    }
+    transition_statut {
+        bigint id PK
+        text statut_depart FK
+        text statut_arrivee FK
+    }
+    intervention {
+        bigint id PK
+        int id_legacy UK "trace de l'origine"
+        bigint equipement_id FK
+        bigint technicien_id FK
+        text statut_code FK
+        date date_ouverture "NOT NULL"
+        date date_cloture
+        numeric cout_total "CHECK >= 0"
+        boolean anomalie_date_incoherente "GENERATED"
+        boolean anomalie_cloture_sans_date "GENERATED"
+        uuid modifie_par
+        timestamptz created_at
+        timestamptz updated_at
+    }
+    intervention_piece {
+        bigint id PK
+        bigint intervention_id FK "UK avec piece_id"
+        bigint piece_id FK
+        int quantite "CHECK > 0"
+    }
+    historique_statut {
+        bigint id PK
+        bigint intervention_id FK
+        text statut_avant FK
+        text statut_apres FK
+        timestamptz modifie_le
+        text role_bdd
+        uuid utilisateur_app
+    }
