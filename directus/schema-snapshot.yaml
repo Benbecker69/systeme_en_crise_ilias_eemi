@@ -1,0 +1,2892 @@
+version: 1
+directus: 11.17.4
+vendor: postgres
+collections:
+  - collection: client
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: client
+      color: null
+      display_template: '{{nom}}'
+      group: null
+      hidden: false
+      icon: storefront
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 2
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Clients
+          singular: Client
+          translation: Clients
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: client
+  - collection: contrat
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: contrat
+      color: null
+      display_template: '{{reference}} · SLA {{sla_heures}} h'
+      group: null
+      hidden: false
+      icon: contract
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 5
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Contrats
+          singular: Contrat
+          translation: Contrats
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: contrat
+  - collection: equipement
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: equipement
+      color: null
+      display_template: '{{numero_serie}} · {{type_id.libelle}}'
+      group: null
+      hidden: false
+      icon: precision_manufacturing
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 3
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Équipements
+          singular: Équipement
+          translation: Équipements
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: equipement
+  - collection: historique_statut
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: historique_statut
+      color: null
+      display_template: '{{statut_avant}} → {{statut_apres}}'
+      group: null
+      hidden: false
+      icon: history
+      item_duplication_fields: null
+      note: 'Alimenté uniquement par trigger : lecture seule.'
+      preview_url: null
+      singleton: false
+      sort: 6
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Historique des statuts
+          singular: Changement de statut
+          translation: Historique des statuts
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: historique_statut
+  - collection: intervention
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: intervention
+      color: null
+      display_template: '#{{id}} · {{equipement_id.numero_serie}} · {{statut_code.libelle}}'
+      group: null
+      hidden: false
+      icon: build
+      item_duplication_fields: null
+      note: >-
+        Interventions de maintenance. Les règles de statut sont appliquées par
+        la base.
+      preview_url: null
+      singleton: false
+      sort: 1
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Interventions
+          singular: Intervention
+          translation: Interventions
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: intervention
+  - collection: intervention_piece
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: intervention_piece
+      color: null
+      display_template: '{{piece_id.reference}} × {{quantite}}'
+      group: referentiels
+      hidden: true
+      icon: inventory_2
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 5
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Lignes de pièces
+          singular: Ligne de pièce
+          translation: Lignes de pièces
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: intervention_piece
+  - collection: interventions_legacy
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: interventions_legacy
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: block
+      item_duplication_fields: null
+      note: Table héritée conservée intacte, inaccessible à l'application.
+      preview_url: null
+      singleton: false
+      sort: 99
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: interventions_legacy
+  - collection: piece
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: piece
+      color: null
+      display_template: '{{reference}}'
+      group: referentiels
+      hidden: false
+      icon: settings
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 4
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Pièces
+          singular: Pièce
+          translation: Pièces
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: piece
+  - collection: referentiels
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: closed
+      collection: referentiels
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: folder
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 7
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Référentiels
+          singular: Référentiel
+          translation: Référentiels
+      unarchive_value: null
+      versioning: false
+  - collection: statut_intervention
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: statut_intervention
+      color: null
+      display_template: '{{libelle}}'
+      group: referentiels
+      hidden: false
+      icon: flag
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 1
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Statuts
+          singular: Statut
+          translation: Statuts
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: statut_intervention
+  - collection: technicien
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: technicien
+      color: null
+      display_template: '{{prenom}} {{nom}}'
+      group: null
+      hidden: false
+      icon: engineering
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 4
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Techniciens
+          singular: Technicien
+          translation: Techniciens
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: technicien
+  - collection: transition_statut
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: transition_statut
+      color: null
+      display_template: '{{statut_depart}} → {{statut_arrivee}}'
+      group: referentiels
+      hidden: false
+      icon: alt_route
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 2
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Transitions
+          singular: Transition
+          translation: Transitions autorisées
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: transition_statut
+  - collection: type_equipement
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: type_equipement
+      color: null
+      display_template: '{{libelle}}'
+      group: referentiels
+      hidden: false
+      icon: category
+      item_duplication_fields: null
+      note: test
+      preview_url: null
+      singleton: false
+      sort: 3
+      sort_field: null
+      translations:
+        - language: fr-FR
+          plural: Types d'équipement
+          singular: Type d'équipement
+          translation: Types d'équipement
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: type_equipement
+fields:
+  - collection: client
+    field: nom
+    type: text
+    meta:
+      collection: client
+      conditions: null
+      display: null
+      display_options: null
+      field: nom
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Nom
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: nom
+      table: client
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: client
+    field: email
+    type: text
+    meta:
+      collection: client
+      conditions: null
+      display: null
+      display_options: null
+      field: email
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: E-mail
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: email
+      table: client
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: client
+    field: telephone
+    type: text
+    meta:
+      collection: client
+      conditions: null
+      display: null
+      display_options: null
+      field: telephone
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Téléphone
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: telephone
+      table: client
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: client
+    field: adresse
+    type: text
+    meta:
+      collection: client
+      conditions: null
+      display: null
+      display_options: null
+      field: adresse
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Adresse
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: adresse
+      table: client
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: client
+    field: code_postal
+    type: text
+    meta:
+      collection: client
+      conditions: null
+      display: null
+      display_options: null
+      field: code_postal
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Code postal
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: code_postal
+      table: client
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: client
+    field: ville
+    type: text
+    meta:
+      collection: client
+      conditions: null
+      display: null
+      display_options: null
+      field: ville
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Ville
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: ville
+      table: client
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: client
+    field: equipements
+    type: alias
+    meta:
+      collection: client
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{numero_serie}} · {{type_id.libelle}}'
+      field: equipements
+      group: null
+      hidden: false
+      interface: list-o2m
+      note: null
+      options:
+        enableSelect: false
+        template: '{{numero_serie}} · {{type_id.libelle}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - o2m
+      translations:
+        - language: fr-FR
+          translation: Équipements
+      validation: null
+      validation_message: null
+      width: full
+  - collection: client
+    field: contrats
+    type: alias
+    meta:
+      collection: client
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{reference}} · SLA {{sla_heures}} h'
+      field: contrats
+      group: null
+      hidden: false
+      interface: list-o2m
+      note: null
+      options:
+        enableSelect: false
+        template: '{{reference}} · SLA {{sla_heures}} h'
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - o2m
+      translations:
+        - language: fr-FR
+          translation: Contrats
+      validation: null
+      validation_message: null
+      width: full
+  - collection: client
+    field: created_at
+    type: timestamp
+    meta:
+      collection: client
+      conditions: null
+      display: null
+      display_options: null
+      field: created_at
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Créé le
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: created_at
+      table: client
+      data_type: timestamp with time zone
+      default_value: now()
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: client
+    field: updated_at
+    type: timestamp
+    meta:
+      collection: client
+      conditions: null
+      display: null
+      display_options: null
+      field: updated_at
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Mis à jour
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: updated_at
+      table: client
+      data_type: timestamp with time zone
+      default_value: now()
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: contrat
+    field: reference
+    type: text
+    meta:
+      collection: contrat
+      conditions: null
+      display: null
+      display_options: null
+      field: reference
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Référence
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: reference
+      table: contrat
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: contrat
+    field: client_id
+    type: bigInteger
+    meta:
+      collection: contrat
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{nom}}'
+      field: client_id
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{nom}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Client
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: client_id
+      table: contrat
+      data_type: bigint
+      default_value: null
+      max_length: null
+      numeric_precision: 64
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: client
+      foreign_key_column: id
+  - collection: contrat
+    field: sla_heures
+    type: integer
+    meta:
+      collection: contrat
+      conditions: null
+      display: null
+      display_options: null
+      field: sla_heures
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: SLA (heures)
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: sla_heures
+      table: contrat
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: equipement
+    field: numero_serie
+    type: text
+    meta:
+      collection: equipement
+      conditions: null
+      display: null
+      display_options: null
+      field: numero_serie
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: N° de série
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: numero_serie
+      table: equipement
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: equipement
+    field: type_id
+    type: bigInteger
+    meta:
+      collection: equipement
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{libelle}}'
+      field: type_id
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{libelle}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Type
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: type_id
+      table: equipement
+      data_type: bigint
+      default_value: null
+      max_length: null
+      numeric_precision: 64
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: type_equipement
+      foreign_key_column: id
+  - collection: equipement
+    field: client_id
+    type: bigInteger
+    meta:
+      collection: equipement
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{nom}}'
+      field: client_id
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{nom}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Client
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: client_id
+      table: equipement
+      data_type: bigint
+      default_value: null
+      max_length: null
+      numeric_precision: 64
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: client
+      foreign_key_column: id
+  - collection: equipement
+    field: interventions
+    type: alias
+    meta:
+      collection: equipement
+      conditions: null
+      display: related-values
+      display_options:
+        template: '#{{id}} · {{date_ouverture}} · {{statut_code}}'
+      field: interventions
+      group: null
+      hidden: false
+      interface: list-o2m
+      note: null
+      options:
+        enableSelect: false
+        template: '#{{id}} · {{date_ouverture}} · {{statut_code}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - o2m
+      translations:
+        - language: fr-FR
+          translation: Interventions
+      validation: null
+      validation_message: null
+      width: full
+  - collection: historique_statut
+    field: intervention_id
+    type: bigInteger
+    meta:
+      collection: historique_statut
+      conditions: null
+      display: related-values
+      display_options:
+        template: '#{{id}}'
+      field: intervention_id
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '#{{id}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Intervention
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: intervention_id
+      table: historique_statut
+      data_type: bigint
+      default_value: null
+      max_length: null
+      numeric_precision: 64
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: intervention
+      foreign_key_column: id
+  - collection: historique_statut
+    field: statut_avant
+    type: text
+    meta:
+      collection: historique_statut
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{libelle}}'
+      field: statut_avant
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{libelle}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Avant
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: statut_avant
+      table: historique_statut
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: statut_intervention
+      foreign_key_column: code
+  - collection: historique_statut
+    field: statut_apres
+    type: text
+    meta:
+      collection: historique_statut
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{libelle}}'
+      field: statut_apres
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{libelle}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Après
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: statut_apres
+      table: historique_statut
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: statut_intervention
+      foreign_key_column: code
+  - collection: historique_statut
+    field: modifie_le
+    type: timestamp
+    meta:
+      collection: historique_statut
+      conditions: null
+      display: datetime
+      display_options: null
+      field: modifie_le
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Date
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: modifie_le
+      table: historique_statut
+      data_type: timestamp with time zone
+      default_value: now()
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: historique_statut
+    field: role_bdd
+    type: text
+    meta:
+      collection: historique_statut
+      conditions: null
+      display: null
+      display_options: null
+      field: role_bdd
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Connexion base
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: role_bdd
+      table: historique_statut
+      data_type: text
+      default_value: SESSION_USER
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: historique_statut
+    field: utilisateur_app
+    type: uuid
+    meta:
+      collection: historique_statut
+      conditions: null
+      display: user
+      display_options: null
+      field: utilisateur_app
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Utilisateur
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: utilisateur_app
+      table: historique_statut
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention
+    field: id
+    type: bigInteger
+    meta:
+      collection: intervention
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: N°
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: id
+      table: intervention
+      data_type: bigint
+      default_value: null
+      max_length: null
+      numeric_precision: 64
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention
+    field: id_legacy
+    type: integer
+    meta:
+      collection: intervention
+      conditions: null
+      display: null
+      display_options: null
+      field: id_legacy
+      group: null
+      hidden: false
+      interface: null
+      note: Identifiant dans l'ancienne table
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: N° hérité
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: id_legacy
+      table: intervention
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention
+    field: statut_code
+    type: text
+    meta:
+      collection: intervention
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{libelle}}'
+      field: statut_code
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: >-
+        Ouverte → En cours → Clôturée (retour possible En cours → Ouverte). Une
+        clôture est définitive et fixe la date de clôture. Toute autre
+        transition est refusée par la base.
+      options:
+        template: '{{libelle}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Statut
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: statut_code
+      table: intervention
+      data_type: text
+      default_value: ouverte
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: statut_intervention
+      foreign_key_column: code
+  - collection: intervention
+    field: technicien_id
+    type: bigInteger
+    meta:
+      collection: intervention
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{prenom}} {{nom}}'
+      field: technicien_id
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{prenom}} {{nom}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Technicien
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: technicien_id
+      table: intervention
+      data_type: bigint
+      default_value: null
+      max_length: null
+      numeric_precision: 64
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: technicien
+      foreign_key_column: id
+  - collection: intervention
+    field: equipement_id
+    type: bigInteger
+    meta:
+      collection: intervention
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{numero_serie}} · {{type_id.libelle}} · {{client_id.nom}}'
+      field: equipement_id
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{numero_serie}} · {{type_id.libelle}} · {{client_id.nom}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Équipement
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: equipement_id
+      table: intervention
+      data_type: bigint
+      default_value: null
+      max_length: null
+      numeric_precision: 64
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: equipement
+      foreign_key_column: id
+  - collection: intervention
+    field: date_ouverture
+    type: date
+    meta:
+      collection: intervention
+      conditions: null
+      display: datetime
+      display_options:
+        format: short
+      field: date_ouverture
+      group: null
+      hidden: false
+      interface: datetime
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Ouverture
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_ouverture
+      table: intervention
+      data_type: date
+      default_value: CURRENT_DATE
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention
+    field: date_cloture
+    type: date
+    meta:
+      collection: intervention
+      conditions: null
+      display: datetime
+      display_options:
+        format: short
+      field: date_cloture
+      group: null
+      hidden: false
+      interface: datetime
+      note: Remplie automatiquement à la clôture
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Clôture
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_cloture
+      table: intervention
+      data_type: date
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention
+    field: cout_total
+    type: decimal
+    meta:
+      collection: intervention
+      conditions: null
+      display: formatted-value
+      display_options:
+        suffix: ' €'
+      field: cout_total
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Coût total (€)
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: cout_total
+      table: intervention
+      data_type: numeric
+      default_value: 0
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 2
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention
+    field: anomalie_date_incoherente
+    type: boolean
+    meta:
+      collection: intervention
+      conditions: null
+      display: boolean
+      display_options:
+        colorOff: '#2ECDA7'
+        colorOn: '#E35169'
+        iconOff: check
+        iconOn: warning
+        labelOff: OK
+        labelOn: Anomalie
+      field: anomalie_date_incoherente
+      group: null
+      hidden: false
+      interface: boolean
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Clôture avant ouverture
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: anomalie_date_incoherente
+      table: intervention
+      data_type: boolean
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: true
+      generation_expression: COALESCE((date_cloture < date_ouverture), false)
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention
+    field: anomalie_cloture_sans_date
+    type: boolean
+    meta:
+      collection: intervention
+      conditions: null
+      display: boolean
+      display_options:
+        colorOff: '#2ECDA7'
+        colorOn: '#E35169'
+        iconOff: check
+        iconOn: warning
+        labelOff: OK
+        labelOn: Anomalie
+      field: anomalie_cloture_sans_date
+      group: null
+      hidden: false
+      interface: boolean
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Clôturée sans date
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: anomalie_cloture_sans_date
+      table: intervention
+      data_type: boolean
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: true
+      generation_expression: ((statut_code = 'cloturee'::text) AND (date_cloture IS NULL))
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention
+    field: pieces
+    type: alias
+    meta:
+      collection: intervention
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{piece_id.reference}} × {{quantite}}'
+      field: pieces
+      group: null
+      hidden: false
+      interface: list-o2m
+      note: null
+      options:
+        enableSelect: false
+        template: '{{piece_id.reference}} × {{quantite}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - o2m
+      translations:
+        - language: fr-FR
+          translation: Pièces utilisées
+      validation: null
+      validation_message: null
+      width: full
+  - collection: intervention
+    field: historique
+    type: alias
+    meta:
+      collection: intervention
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{modifie_le}} : {{statut_avant}} → {{statut_apres}}'
+      field: historique
+      group: null
+      hidden: false
+      interface: list-o2m
+      note: null
+      options:
+        enableSelect: false
+        template: '{{modifie_le}} : {{statut_avant}} → {{statut_apres}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - o2m
+      translations:
+        - language: fr-FR
+          translation: Historique
+      validation: null
+      validation_message: null
+      width: full
+  - collection: intervention
+    field: modifie_par
+    type: uuid
+    meta:
+      collection: intervention
+      conditions: null
+      display: user
+      display_options: null
+      field: modifie_par
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special:
+        - user-updated
+      translations:
+        - language: fr-FR
+          translation: Modifié par
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: modifie_par
+      table: intervention
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention
+    field: created_at
+    type: timestamp
+    meta:
+      collection: intervention
+      conditions: null
+      display: datetime
+      display_options: null
+      field: created_at
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Créée le
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: created_at
+      table: intervention
+      data_type: timestamp with time zone
+      default_value: now()
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention
+    field: updated_at
+    type: timestamp
+    meta:
+      collection: intervention
+      conditions: null
+      display: datetime
+      display_options: null
+      field: updated_at
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Mise à jour
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: updated_at
+      table: intervention
+      data_type: timestamp with time zone
+      default_value: now()
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: intervention_piece
+    field: intervention_id
+    type: bigInteger
+    meta:
+      collection: intervention_piece
+      conditions: null
+      display: related-values
+      display_options:
+        template: '#{{id}}'
+      field: intervention_id
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '#{{id}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Intervention
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: intervention_id
+      table: intervention_piece
+      data_type: bigint
+      default_value: null
+      max_length: null
+      numeric_precision: 64
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: intervention
+      foreign_key_column: id
+  - collection: intervention_piece
+    field: piece_id
+    type: bigInteger
+    meta:
+      collection: intervention_piece
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{reference}}'
+      field: piece_id
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{reference}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Pièce
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: piece_id
+      table: intervention_piece
+      data_type: bigint
+      default_value: null
+      max_length: null
+      numeric_precision: 64
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: piece
+      foreign_key_column: id
+  - collection: intervention_piece
+    field: quantite
+    type: integer
+    meta:
+      collection: intervention_piece
+      conditions: null
+      display: null
+      display_options: null
+      field: quantite
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Quantité
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: quantite
+      table: intervention_piece
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: piece
+    field: reference
+    type: text
+    meta:
+      collection: piece
+      conditions: null
+      display: null
+      display_options: null
+      field: reference
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Référence
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: reference
+      table: piece
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: statut_intervention
+    field: code
+    type: text
+    meta:
+      collection: statut_intervention
+      conditions: null
+      display: null
+      display_options: null
+      field: code
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Code
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: code
+      table: statut_intervention
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: statut_intervention
+    field: libelle
+    type: text
+    meta:
+      collection: statut_intervention
+      conditions: null
+      display: null
+      display_options: null
+      field: libelle
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Libellé
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: libelle
+      table: statut_intervention
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: statut_intervention
+    field: ordre
+    type: integer
+    meta:
+      collection: statut_intervention
+      conditions: null
+      display: null
+      display_options: null
+      field: ordre
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Ordre
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: ordre
+      table: statut_intervention
+      data_type: smallint
+      default_value: null
+      max_length: null
+      numeric_precision: 16
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: statut_intervention
+    field: est_initial
+    type: boolean
+    meta:
+      collection: statut_intervention
+      conditions: null
+      display: null
+      display_options: null
+      field: est_initial
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Statut initial
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: est_initial
+      table: statut_intervention
+      data_type: boolean
+      default_value: false
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: statut_intervention
+    field: est_final
+    type: boolean
+    meta:
+      collection: statut_intervention
+      conditions: null
+      display: null
+      display_options: null
+      field: est_final
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Statut final
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: est_final
+      table: statut_intervention
+      data_type: boolean
+      default_value: false
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: technicien
+    field: interventions
+    type: alias
+    meta:
+      collection: technicien
+      conditions: null
+      display: related-values
+      display_options:
+        template: '#{{id}} · {{date_ouverture}} · {{statut_code}}'
+      field: interventions
+      group: null
+      hidden: false
+      interface: list-o2m
+      note: null
+      options:
+        enableSelect: false
+        template: '#{{id}} · {{date_ouverture}} · {{statut_code}}'
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special:
+        - o2m
+      translations:
+        - language: fr-FR
+          translation: Interventions
+      validation: null
+      validation_message: null
+      width: full
+  - collection: technicien
+    field: nom
+    type: text
+    meta:
+      collection: technicien
+      conditions: null
+      display: null
+      display_options: null
+      field: nom
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Nom
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: nom
+      table: technicien
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: technicien
+    field: prenom
+    type: text
+    meta:
+      collection: technicien
+      conditions: null
+      display: null
+      display_options: null
+      field: prenom
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Prénom
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: prenom
+      table: technicien
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: technicien
+    field: telephone
+    type: text
+    meta:
+      collection: technicien
+      conditions: null
+      display: null
+      display_options: null
+      field: telephone
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Téléphone
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: telephone
+      table: technicien
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: technicien
+    field: email
+    type: text
+    meta:
+      collection: technicien
+      conditions: null
+      display: null
+      display_options: null
+      field: email
+      group: null
+      hidden: false
+      interface: null
+      note: Relie le technicien à son compte de connexion
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: E-mail du compte
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: email
+      table: technicien
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: technicien
+    field: created_at
+    type: timestamp
+    meta:
+      collection: technicien
+      conditions: null
+      display: null
+      display_options: null
+      field: created_at
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Créé le
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: created_at
+      table: technicien
+      data_type: timestamp with time zone
+      default_value: now()
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: technicien
+    field: updated_at
+    type: timestamp
+    meta:
+      collection: technicien
+      conditions: null
+      display: null
+      display_options: null
+      field: updated_at
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Mis à jour
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: updated_at
+      table: technicien
+      data_type: timestamp with time zone
+      default_value: now()
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: transition_statut
+    field: statut_depart
+    type: text
+    meta:
+      collection: transition_statut
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{libelle}}'
+      field: statut_depart
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{libelle}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Depuis
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: statut_depart
+      table: transition_statut
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: statut_intervention
+      foreign_key_column: code
+  - collection: transition_statut
+    field: statut_arrivee
+    type: text
+    meta:
+      collection: transition_statut
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{libelle}}'
+      field: statut_arrivee
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{libelle}}'
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Vers
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: statut_arrivee
+      table: transition_statut
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: statut_intervention
+      foreign_key_column: code
+  - collection: type_equipement
+    field: libelle
+    type: text
+    meta:
+      collection: type_equipement
+      conditions: null
+      display: null
+      display_options: null
+      field: libelle
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-FR
+          translation: Libellé
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: libelle
+      table: type_equipement
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+systemFields:
+  - collection: directus_activity
+    field: timestamp
+    schema:
+      is_indexed: true
+  - collection: directus_revisions
+    field: activity
+    schema:
+      is_indexed: true
+  - collection: directus_revisions
+    field: parent
+    schema:
+      is_indexed: true
+relations:
+  - collection: contrat
+    field: client_id
+    related_collection: client
+    meta:
+      junction_field: null
+      many_collection: contrat
+      many_field: client_id
+      one_allowed_collections: null
+      one_collection: client
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: contrats
+      sort_field: null
+    schema:
+      table: contrat
+      column: client_id
+      foreign_key_table: client
+      foreign_key_column: id
+      constraint_name: fk_contrat_client
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: equipement
+    field: client_id
+    related_collection: client
+    meta:
+      junction_field: null
+      many_collection: equipement
+      many_field: client_id
+      one_allowed_collections: null
+      one_collection: client
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: equipements
+      sort_field: null
+    schema:
+      table: equipement
+      column: client_id
+      foreign_key_table: client
+      foreign_key_column: id
+      constraint_name: fk_equipement_client
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: historique_statut
+    field: intervention_id
+    related_collection: intervention
+    meta:
+      junction_field: null
+      many_collection: historique_statut
+      many_field: intervention_id
+      one_allowed_collections: null
+      one_collection: intervention
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: historique
+      sort_field: null
+    schema:
+      table: historique_statut
+      column: intervention_id
+      foreign_key_table: intervention
+      foreign_key_column: id
+      constraint_name: fk_historique_intervention
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: historique_statut
+    field: utilisateur_app
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: historique_statut
+      many_field: utilisateur_app
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+  - collection: intervention
+    field: equipement_id
+    related_collection: equipement
+    meta:
+      junction_field: null
+      many_collection: intervention
+      many_field: equipement_id
+      one_allowed_collections: null
+      one_collection: equipement
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: interventions
+      sort_field: null
+    schema:
+      table: intervention
+      column: equipement_id
+      foreign_key_table: equipement
+      foreign_key_column: id
+      constraint_name: fk_intervention_equipement
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: intervention
+    field: technicien_id
+    related_collection: technicien
+    meta:
+      junction_field: null
+      many_collection: intervention
+      many_field: technicien_id
+      one_allowed_collections: null
+      one_collection: technicien
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: interventions
+      sort_field: null
+    schema:
+      table: intervention
+      column: technicien_id
+      foreign_key_table: technicien
+      foreign_key_column: id
+      constraint_name: fk_intervention_technicien
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: intervention
+    field: modifie_par
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: intervention
+      many_field: modifie_par
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+  - collection: intervention_piece
+    field: intervention_id
+    related_collection: intervention
+    meta:
+      junction_field: null
+      many_collection: intervention_piece
+      many_field: intervention_id
+      one_allowed_collections: null
+      one_collection: intervention
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: pieces
+      sort_field: null
+    schema:
+      table: intervention_piece
+      column: intervention_id
+      foreign_key_table: intervention
+      foreign_key_column: id
+      constraint_name: fk_intervention_piece_intervention
+      on_update: NO ACTION
+      on_delete: NO ACTION
