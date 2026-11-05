@@ -160,12 +160,12 @@ FIELDS = {
                             display_options={"suffix": " €"}),
         "anomalie_date_incoherente": plain("Clôture avant ouverture", **ANOMALY),
         "anomalie_cloture_sans_date": plain("Clôturée sans date", **ANOMALY),
-        "pieces": o2m("{{piece_id.reference}} × {{quantite}}", "Pièces utilisées"),
-        "historique": o2m("{{modifie_le}} : {{statut_avant}} → {{statut_apres}}", "Historique", readonly=True),
         "modifie_par": plain("Modifié par", special=["user-updated"], interface="select-dropdown-m2o",
                              display="user", readonly=True),
         "created_at": plain("Créée le", readonly=True, display="datetime"),
         "updated_at": plain("Mise à jour", readonly=True, display="datetime"),
+        "pieces": o2m("{{piece_id.reference}} × {{quantite}}", "Pièces utilisées"),
+        "historique": o2m("{{modifie_le}} : {{statut_avant}} → {{statut_apres}}", "Historique", readonly=True),
     },
     "client": {
         "nom": plain("Nom"), "email": plain("E-mail"), "telephone": plain("Téléphone"),
@@ -230,10 +230,12 @@ TECH_PERMISSIONS = [
                               "pieces", "historique", "modifie_par", "updated_at"], MY_INTERVENTIONS),
     # The technician may only move the status; the database checks the transition
     ("intervention", "update", ["statut_code", "modifie_par"], MY_INTERVENTIONS),
-    ("equipement", "read", ["id", "numero_serie", "type_id", "client_id"], {"interventions": MY_INTERVENTIONS}),
-    ("client", "read", ["id", "nom", "telephone", "adresse", "code_postal", "ville"],
+    # The reverse (one-to-many) fields must be readable for Directus to expose the relation;
+    # they only return rows already allowed by the intervention filter.
+    ("equipement", "read", ["id", "numero_serie", "type_id", "client_id", "interventions"], {"interventions": MY_INTERVENTIONS}),
+    ("client", "read", ["id", "nom", "telephone", "adresse", "code_postal", "ville", "equipements"],
      {"equipements": {"interventions": MY_INTERVENTIONS}}),
-    ("technicien", "read", ["id", "nom", "prenom"], ME),
+    ("technicien", "read", ["id", "nom", "prenom", "interventions"], ME),
     ("intervention_piece", "read", ["id", "intervention_id", "piece_id", "quantite"], {"intervention_id": MY_INTERVENTIONS}),
     ("historique_statut", "read", ["id", "intervention_id", "statut_avant", "statut_apres", "modifie_le"],
      {"intervention_id": MY_INTERVENTIONS}),
@@ -267,7 +269,8 @@ POLICIES = {
 TECH_ACCOUNTS = [("0681033603", "karim.durand@example.com"), ("0697457905", "ines.vidal@example.com")]
 
 ANOMALIES = {"_or": [{"anomalie_date_incoherente": {"_eq": True}}, {"anomalie_cloture_sans_date": {"_eq": True}}]}
-NOT_CLOSED = {"statut_code": {"_neq": "cloturee"}}
+# statut_code is a relation: GraphQL (used by the dashboard) needs the nested form
+NOT_CLOSED = {"statut_code": {"code": {"_neq": "cloturee"}}}
 
 PRESETS = {
     "Technicien": [
@@ -286,7 +289,7 @@ PRESETS = {
           "equipement_id.client_id.nom", "anomalie_date_incoherente", "anomalie_cloture_sans_date"]),
         ("Interventions non clôturées", "pending_actions", NOT_CLOSED,
          ["id", "statut_code", "date_ouverture", "technicien_id", "equipement_id.client_id.nom", "cout_total"]),
-        ("Interventions en cours", "autorenew", {"statut_code": {"_eq": "en_cours"}},
+        ("Interventions en cours", "autorenew", {"statut_code": {"code": {"_eq": "en_cours"}}},
          ["id", "date_ouverture", "technicien_id", "equipement_id.client_id.nom"]),
     ],
 }
@@ -339,7 +342,8 @@ def configure_collections(dx: Directus) -> None:
 
 def configure_fields(dx: Directus) -> None:
     for collection, fields in FIELDS.items():
-        for field, meta in fields.items():
+        for position, (field, meta) in enumerate(fields.items(), start=1):
+            meta = {**meta, "sort": position}          # form order = declaration order
             if (collection, field) in ALIAS_FIELDS and not dx.exists(f"/fields/{collection}/{field}"):
                 dx.request("POST", f"/fields/{collection}", {"field": field, "type": "alias", "meta": meta})
             else:
@@ -376,18 +380,27 @@ def configure_access(dx: Directus) -> dict[str, str]:
     return roles
 
 
+def ensure_user(dx: Directus, email: str, password: str, profile: dict) -> None:
+    """Creates the account, or updates its profile. The password is only set on
+    creation, so re-running the script does not log users out."""
+    profile = {**profile, "language": "fr-FR", "status": "active"}
+    found = dx.find("/users", {"email": {"_eq": email}}, "id")
+    if found:
+        dx.request("PATCH", f"/users/{found[0]['id']}", profile)
+    else:
+        dx.request("POST", "/users", {"email": email, "password": password, **profile})
+
+
 def configure_users(dx: Directus, roles: dict[str, str]) -> None:
-    ensure(dx, "/users", "email", ENV["APP_MANAGER_EMAIL"],
-           {"password": ENV["APP_MANAGER_PASSWORD"], "role": roles["Manager"], "first_name": "Manager",
-            "last_name": "MaintenancePro", "language": "fr-FR", "status": "active"})
+    ensure_user(dx, ENV["APP_MANAGER_EMAIL"], ENV["APP_MANAGER_PASSWORD"],
+                {"role": roles["Manager"], "first_name": "Manager", "last_name": "MaintenancePro"})
     for phone, email in TECH_ACCOUNTS:
         tech = dx.find("/items/technicien", {"telephone": {"_eq": phone}}, "id,nom,prenom")
         if not tech:
             raise DirectusError(f"Technicien {phone} introuvable : lancer la migration d'abord")
         dx.request("PATCH", f"/items/technicien/{tech[0]['id']}", {"email": email})
-        ensure(dx, "/users", "email", email,
-               {"password": ENV["APP_TECH_PASSWORD"], "role": roles["Technicien"], "first_name": tech[0]["prenom"],
-                "last_name": tech[0]["nom"], "language": "fr-FR", "status": "active"})
+        ensure_user(dx, email, ENV["APP_TECH_PASSWORD"],
+                    {"role": roles["Technicien"], "first_name": tech[0]["prenom"], "last_name": tech[0]["nom"]})
 
 
 def configure_presets(dx: Directus, roles: dict[str, str]) -> None:
