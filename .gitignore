@@ -1,0 +1,12 @@
+# Secrets (copy .env.example to .env)
+.env
+
+# Teacher-only material, never published
+checks.sql
+generate_seed.py
+ground_truth_*.json
+
+# Local runtime artifacts
+__pycache__/
+*.pyc
+*.log
