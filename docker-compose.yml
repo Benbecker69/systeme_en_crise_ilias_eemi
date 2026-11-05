@@ -1,0 +1,79 @@
+name: maintenancepro
+
+services:
+  db:
+    image: postgres:17.11-alpine3.23
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DIRECTUS_DB_USER: ${DIRECTUS_DB_USER}
+      DIRECTUS_DB_PASSWORD: ${DIRECTUS_DB_PASSWORD}
+    ports:
+      - "${POSTGRES_HOST_PORT}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      # Executed once, in name order, on an empty data directory
+      - ./docker/initdb/00-roles.sh:/docker-entrypoint-initdb.d/00-roles.sh:ro
+      - ./seed/seed_4.sql:/docker-entrypoint-initdb.d/10-seed_4.sql:ro
+      # Project SQL, run on demand through scripts/run-sql.ps1
+      - ./sql:/work/sql:ro
+      - ./audit:/work/audit:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  directus:
+    image: directus/directus:11.17.4
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PUBLIC_URL: http://localhost:${DIRECTUS_PORT}
+      SECRET: ${DIRECTUS_SECRET}
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
+      DB_CLIENT: pg
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${POSTGRES_DB}
+      DB_USER: ${DIRECTUS_DB_USER}
+      DB_PASSWORD: ${DIRECTUS_DB_PASSWORD}
+      # Always read the live schema so SQL migrations show up without a restart
+      CACHE_SCHEMA: "false"
+      TELEMETRY: "false"
+    ports:
+      - "${DIRECTUS_PORT}:8055"
+    volumes:
+      - directus_uploads:/directus/uploads
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:8055/server/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  pgadmin:
+    image: dpage/pgadmin4:9.18.0
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - "${PGADMIN_PORT}:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./docker/pgadmin/servers.json:/pgadmin4/servers.json:ro
+
+volumes:
+  db_data:
+  directus_uploads:
+  pgadmin_data:
