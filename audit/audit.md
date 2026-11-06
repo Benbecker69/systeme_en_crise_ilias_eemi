@@ -284,7 +284,8 @@ Chercher une pièce (P03) demande un `LIKE '%…%'`, qui ne peut pas utiliser d'
          Filter: (pieces_utilisees ~~ '%REF-005%'::text)
          Rows Removed by Filter: 238
 ```
-**Conséquence.** À 271 lignes le coût est invisible. Mais il augmente avec chaque intervention ajoutée, et aucune date ne peut être indexée tant qu'elle reste du texte.
+**Conséquence.** À 271 lignes le coût est invisible. Mais il augmente avec chaque intervention ajoutée, et aucune date ne peut être indexée tant qu'elle reste du texte : PostgreSQL refuse un index sur `to_date(date_ouverture, …)` (*functions in index expression must be marked IMMUTABLE*).
+**Mesure.** À 271 000 interventions, ce planning prend **231 ms** dans la table héritée, contre **1,9 ms** dans le schéma normalisé. La recherche de pièce prend 54 ms contre 9 ms. Détail dans le [benchmark](../docs/benchmark.md).
 **Correction.** Colonnes typées, index sur toutes les clés étrangères et sur `date_ouverture`, pièces dans une table de liaison indexée.
 
 ### D13 — Recherche par nom non fiable · Majeure
