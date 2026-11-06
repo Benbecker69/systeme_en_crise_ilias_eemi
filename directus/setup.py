@@ -6,10 +6,12 @@ permissions, presets and dashboard panels of the objects managed here are
 rebuilt from the declarations below, so the result always matches this file.
 
 Usage:  python directus/setup.py          (reads ../.env)
+        docker compose run --rm outils python directus/setup.py   (no local Python needed)
 """
 from __future__ import annotations
 
 import json
+import os
 import pathlib
 import sys
 import urllib.error
@@ -30,7 +32,8 @@ def load_env() -> dict[str, str]:
 
 
 ENV = load_env()
-BASE_URL = f"http://localhost:{ENV.get('DIRECTUS_PORT', '8055')}"
+# DIRECTUS_URL is set when the script runs in the "outils" container (docker-compose.yml)
+BASE_URL = os.environ.get("DIRECTUS_URL") or f"http://localhost:{ENV.get('DIRECTUS_PORT', '8055')}"
 
 
 class DirectusError(RuntimeError):

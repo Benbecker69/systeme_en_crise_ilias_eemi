@@ -1,0 +1,31 @@
+BEGIN
+SET
+SELECT 1
+--- A. Nouveau statut « en attente de pièces »
+INSERT 0 1
+INSERT 0 2
+A1 PASS : en_attente_pieces -> cloturee refusée (Transition de statut interdite : en_attente_pieces -> cloturee)
+DO
+A2 PASS : cycle complet accepté et historisé (5 lignes : création + 4 changements)
+ALTER TABLE
+UPDATE 4
+ALTER TABLE
+CREATE VIEW
+A3 PASS : le contrat d'export garde ses 3 valeurs (en_attente_pieces exporté en en_cours)
+DO
+--- B. Prix des pièces
+ALTER TABLE
+ALTER TABLE
+B1 PASS : 362 lignes conservées, aucun prix inventé, prix négatif refusé
+DO
+--- C. Plusieurs techniciens par intervention
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 272
+C1 PASS : chaque intervention reprise avec son responsable, renfort accepté, 2e responsable refusé
+DO
+UPDATE 1
+DO
+PASS : après les 3 évolutions, le contrat d'interface est identique (clients=21,equipements=40,lignes_pieces=362,techniciens=8)
+ROLLBACK

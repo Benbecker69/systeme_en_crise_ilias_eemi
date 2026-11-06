@@ -14,16 +14,20 @@ Sources : docs officielles Directus ([contrôle d'accès](https://directus.com/d
 
 ## Lancer l'application
 
+Tout est fait par `scripts/install.ps1` (ou `install.sh`) : voir le [guide d'installation](guide-installation.md). Étape par étape :
+
 ```powershell
 ./scripts/reset.ps1                       # base vide + seed
 ./scripts/run-sql.ps1 sql/migration.sql   # schéma + données
 ./scripts/setup-app.ps1                   # construit l'application (rejouable)
-python directus/verify.py                 # vérifie la séparation des droits
+./scripts/verify-app.ps1                  # vérifie la séparation des droits
 ```
+
+Les scripts Python tournent dans le conteneur `outils` : aucune installation de Python n'est nécessaire.
 
 Adresse : http://localhost:8055
 
-Comptes de démonstration (mots de passe dans `.env`) :
+Comptes de démonstration (mots de passe dans `.env`, généré par l'installation) :
 
 | Profil | Compte |
 |---|---|
