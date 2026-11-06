@@ -4,6 +4,8 @@
 
 Source du diagramme : [`schema.mmd`](schema.mmd) (Mermaid). Le script qui crée ce schéma est [`sql/migration.sql`](../sql/migration.sql).
 
+Alternatives écartées, arguments et sources : [choix-techniques.md](choix-techniques.md). Mesures de performance : [benchmark.md](benchmark.md).
+
 ## Choix de conception
 
 | Choix | Justification |
