@@ -74,6 +74,23 @@ services:
       - pgadmin_data:/var/lib/pgadmin
       - ./docker/pgadmin/servers.json:/pgadmin4/servers.json:ro
 
+  # One-shot container that runs the Directus build and check scripts,
+  # so no local Python is needed. Not started by "up":
+  #   docker compose run --rm outils python directus/setup.py
+  outils:
+    image: python:3.13.16-alpine3.23
+    profiles: ["outils"]
+    depends_on:
+      directus:
+        condition: service_healthy
+    working_dir: /app
+    environment:
+      DIRECTUS_URL: http://directus:8055
+      PYTHONDONTWRITEBYTECODE: "1"
+    volumes:
+      - ./directus:/app/directus:ro
+      - ./.env:/app/.env:ro
+
 volumes:
   db_data:
   directus_uploads:
